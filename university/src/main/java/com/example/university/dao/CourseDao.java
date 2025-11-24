@@ -2,7 +2,7 @@ package com.example.university.dao;
 
 import com.example.university.domain.Course;
 import org.springframework.stereotype.Repository;
-
+//Hello
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.TypedQuery;
@@ -46,7 +46,6 @@ public class CourseDao {
         em.getTransaction().commit();
     }
 
-
     public void deleteAll() {
         em.getTransaction().begin();
         em.createQuery("DELETE FROM Course").executeUpdate();
@@ -77,7 +76,7 @@ public class CourseDao {
         return query.setParameter("credits", credits).getResultList();
     }
 
-    public List<Course> findByCriteria(CriteriaQuery<Course> criteria){
+    public List<Course> findByCriteria(CriteriaQuery<Course> criteria) {
         return em.createQuery(criteria).getResultList();
     }
 }
