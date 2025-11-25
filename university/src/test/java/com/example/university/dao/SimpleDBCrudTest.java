@@ -32,11 +32,11 @@ public class SimpleDBCrudTest {
     public void testStaffCrud() {
         // Test Create
         UniversityFactory.fillUniversity(universityService);
-        //Test FindA ll
+        // Test FindA ll
         List<Staff> allStaff = universityService.findAllStaff();
         int totalStaff = allStaff.size();
         allStaff.stream().forEach(System.out::println);
-        assertEquals(11,  allStaff.size());
+        assertEquals(11, allStaff.size());
 
         // Test Find by Id
         Staff deanThomas = allStaff.get(0);
@@ -46,13 +46,13 @@ public class SimpleDBCrudTest {
         // Test Update, Change first Name to Patrick
         deanThomas.getMember().setFirstName("Patrick");
         staffDao.save(deanThomas);
-
+        // (THQT A)
         assertEquals("Patrick",
                 staffDao.findById(deanThomas.getId()).get().getMember().getFirstName());
 
         staffDao.delete(deanThomas);
         allStaff = staffDao.findAll();
-        assertEquals(totalStaff -1, allStaff.size());
+        assertEquals(totalStaff - 1, allStaff.size());
         allStaff.stream().forEach(System.out::println);
     }
 }
