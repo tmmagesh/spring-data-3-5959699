@@ -1,6 +1,8 @@
 package com.example.university;
 
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,17 +16,27 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import javax.swing.Spring;
+
 import java.util.Properties;
 
 /**
  * Configuration Class for the University library
  */
-@Configuration
-@EnableTransactionManagement
-@ComponentScan("com.example.university")
-public class PersistenceJPAConfig {
 
+@SpringBootApplication
+public class UniversityApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(UniversityApplication.class, args);
+        //System.out.println("University Application");
+    }       
 
+}
+
+    /*  Old code commented
+     @Configuration
+     @EnableTransactionManagement
+     @ComponentScan("com.example.university")
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         final LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
@@ -70,3 +82,5 @@ public class PersistenceJPAConfig {
         return hibernateProperties;
     }
 }
+
+ */

@@ -1,10 +1,14 @@
 package com.example.university.dao;
 
 import com.example.university.domain.Course;
+import com.example.university.domain.Department;
+//import com.example.university.domain.Student;
+
 import org.springframework.stereotype.Repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.CriteriaQuery;
 import java.util.List;
@@ -23,15 +27,18 @@ public class CourseDao {
     }
 
     public List<Course> findAll() {
-        return em.createQuery("from Course").getResultList();
+        return em.createQuery("from Course", Course.class).getResultList();
     }
 
     public Optional<Course> findById(int id) {
         return Optional.ofNullable(em.find(Course.class, id));
     }
+    // CP MAG Created findByFullTime in CourseDao though it seems more appropriate
+    // in StudentDao
+    // since it queries Student entity. Please verify.
+    //
 
     public Course save(Course course) {
-
         em.getTransaction().begin();
         em.persist(course);
         em.getTransaction().commit();
@@ -51,11 +58,25 @@ public class CourseDao {
         em.createQuery("DELETE FROM Course").executeUpdate();
         em.getTransaction().commit();
     }
+    /*
+     * public Optional<Course> findByName(String name) {
+     * TypedQuery<Course> query = em.createQuery(
+     * "SELECT c FROM Course c WHERE c.name = :name", Course.class);
+     * return Optional.ofNullable(query.setParameter("name",
+     * name).getSingleResult());
+     * }
+     */
 
     public Optional<Course> findByName(String name) {
-        TypedQuery<Course> query = em.createQuery(
-                "SELECT c FROM Course c WHERE c.name = :name", Course.class);
-        return Optional.ofNullable(query.setParameter("name", name).getSingleResult());
+        TypedQuery<Course> query = em.createQuery("SELECT c FROM Course c WHERE c.name = :name", Course.class);
+        query.setParameter("name", name);
+        // return Optional.ofNullable(query.setParameter("name",
+        // name).getSingleResult());
+        try {
+            return Optional.of(query.setParameter("name", name).getSingleResult());
+        } catch (NoResultException e) {
+            return Optional.empty();
+        }
     }
 
     public List<Course> findByChairLastName(String chair) {
@@ -78,5 +99,12 @@ public class CourseDao {
 
     public List<Course> findByCriteria(CriteriaQuery<Course> criteria) {
         return em.createQuery(criteria).getResultList();
+    }
+
+    // CP MAG Added findByDepartment method below in CourseDao
+    public List<Course> findByDepartment(Department department) {
+        TypedQuery<Course> query = em.createQuery(
+                "SELECT c FROM Course c WHERE c.department = :department", Course.class);
+        return query.setParameter("department", department).getResultList();
     }
 }

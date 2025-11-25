@@ -65,7 +65,9 @@ public class Course {
     public Department getDepartment() {
         return department;
     }
-
+    // This is a helper method to add a prerequisite course to the current course.
+    // It adds the given prerequisite course to the prerequisites list and returns
+    // the current course instance for method chaining.
     public Course addPrerequisite(Course prerequisite){
         prerequisites.add(prerequisite);
         return this;

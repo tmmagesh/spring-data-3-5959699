@@ -1,11 +1,12 @@
 package com.example.university.dao;
 
-import com.example.university.PersistenceJPAConfig;
+import com.example.university.UniversityApplication;
 import com.example.university.business.UniversityService;
 import com.example.university.domain.Student;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -17,8 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 /**
  * Test queries that involve clauses and expressions
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
+//@ExtendWith(SpringExtension.class)
+//@ContextConfiguration(classes = { UniversityApplication.class })
+@SpringBootTest
 public class FindByClausesAndExpressions {
 
     @Autowired

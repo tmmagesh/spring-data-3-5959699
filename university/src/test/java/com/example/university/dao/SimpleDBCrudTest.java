@@ -1,11 +1,12 @@
 package com.example.university.dao;
 
-import com.example.university.PersistenceJPAConfig;
+import com.example.university.UniversityApplication;
 import com.example.university.business.UniversityService;
 import com.example.university.domain.Staff;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -17,8 +18,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Tests that verify simple CRUD methods
  */
-@ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { PersistenceJPAConfig.class })
+// @ExtendWith(SpringExtension.class)
+// @ContextConfiguration(classes = { UniversityApplication.class })
+@SpringBootTest
 public class SimpleDBCrudTest {
 
     @Autowired
@@ -35,11 +37,12 @@ public class SimpleDBCrudTest {
     public void testStaffCrud() {
         // Test Create
         UniversityFactory.fillUniversity(universityService);
-        //Test FindA ll
+        // Test FindA ll
         List<Staff> allStaff = universityService.findAllStaff();
         int totalStaff = allStaff.size();
+        System.out.println("All Staff count added by Magesh is :" + totalStaff);
         allStaff.stream().forEach(System.out::println);
-        assertEquals(11,  allStaff.size());
+        assertEquals(12, allStaff.size());
 
         // Test Find by Id
         Staff deanThomas = allStaff.get(0);
@@ -55,7 +58,7 @@ public class SimpleDBCrudTest {
 
         staffDao.delete(deanThomas);
         allStaff = staffDao.findAll();
-        assertEquals(totalStaff -1, allStaff.size());
+        assertEquals(totalStaff - 1, allStaff.size());
         allStaff.stream().forEach(System.out::println);
     }
 }

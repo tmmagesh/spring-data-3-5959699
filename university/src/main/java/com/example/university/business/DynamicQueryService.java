@@ -18,7 +18,7 @@ public class DynamicQueryService {
 
     private CourseDao courseDao;
 
-    private EntityManagerFactory emf;
+    // private EntityManagerFactory emf;
 
     private EntityManager em;
 
@@ -32,12 +32,9 @@ public class DynamicQueryService {
         CriteriaQuery<Course> cq = cb.createQuery(Course.class);
         Root<Course> root = cq.from(Course.class);
         List<Predicate> predicates = new ArrayList<>();
-        filter.getDepartment().ifPresent(d ->
-                predicates.add(cb.equal(root.get("department"), d)));
-        filter.getCredits().ifPresent(c ->
-                predicates.add(cb.equal(root.get("credits"), c)));
-        filter.getInstructor().ifPresent(i ->
-                predicates.add(cb.equal(root.get("instructor"), i)));
+        filter.getDepartment().ifPresent(d -> predicates.add(cb.equal(root.get("department"), d)));
+        filter.getCredits().ifPresent(c -> predicates.add(cb.equal(root.get("credits"), c)));
+        filter.getInstructor().ifPresent(i -> predicates.add(cb.equal(root.get("instructor"), i)));
         cq.select(root).where(predicates.toArray(new Predicate[predicates.size()]));
         return courseDao.findByCriteria(cq);
     }
