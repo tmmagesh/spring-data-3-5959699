@@ -20,30 +20,32 @@ public class DepartmentDao {
     public DepartmentDao(EntityManagerFactory emf) {
         this.em = emf.createEntityManager();
     }
-
-    public List<Department> findAll() {
-        return em.createQuery("from Department").getResultList();
-    }
-    public Optional<Department> findById(int id){
-        return Optional.ofNullable(em.find(Department.class, id));
-    }
-
-    public Department save(Department department) {
-        em.getTransaction().begin();
-        em.persist(department);
-        em.getTransaction().commit();
-        return department;
-    }
-
-    public void delete(Department department){
-        em.remove(department);
-    }
-
-    public void deleteAll() {
-        em.getTransaction().begin();
-        em.createQuery("DELETE FROM Department").executeUpdate();
-        em.getTransaction().commit();
-    }
+    /*
+     * public List<Department> findAll() {
+     * return em.createQuery("from Department").getResultList();
+     * }
+     * public Optional<Department> findById(int id){
+     * return Optional.ofNullable(em.find(Department.class, id));
+     * }
+     * 
+     * public Department save(Department department) {
+     * em.getTransaction().begin();
+     * em.persist(department);
+     * em.getTransaction().commit();
+     * return department;
+     * }
+     * 
+     * public void delete(Department department){
+     * em.remove(department);
+     * }
+     * 
+     * public void deleteAll() {
+     * em.getTransaction().begin();
+     * em.createQuery("DELETE FROM Department").executeUpdate();
+     * em.getTransaction().commit();
+     * }
+     * 
+     */
 
     public Optional<Department> findByName(String name) {
         TypedQuery<Department> query = em.createQuery(

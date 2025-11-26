@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.example.university.business.UniversityService;
 import com.example.university.domain.Staff;
+import com.example.university.repo.StaffRepo;
+
 
 /**
  * Tests that verify simple CRUD methods
@@ -22,7 +24,7 @@ public class SimpleDBCrudTest {
     private UniversityService universityService;
 
     @Autowired
-    private StaffDao staffDao;
+    private StaffRepo staffRepo;
 
     private List<Staff> allStaff;
     private Optional<Staff> oneStaff;
@@ -32,27 +34,27 @@ public class SimpleDBCrudTest {
     public void testStaffCrud() {
         // Test Create
         UniversityFactory.fillUniversity(universityService);
-        //Test FindA ll
+        // Test FindA ll
         List<Staff> allStaff = universityService.findAllStaff();
         int totalStaff = allStaff.size();
         allStaff.stream().forEach(System.out::println);
-        assertEquals(11,  allStaff.size());
+        assertEquals(11, allStaff.size());
 
         // Test Find by Id
         Staff deanThomas = allStaff.get(0);
         System.out.println(deanThomas);
-        assertEquals(deanThomas, staffDao.findById(deanThomas.getId()).get());
+        assertEquals(deanThomas, staffRepo.findById(deanThomas.getId()).get());
 
         // Test Update, Change first Name to Patrick
         deanThomas.getMember().setFirstName("Patrick");
-        staffDao.save(deanThomas);
+        staffRepo.save(deanThomas);
 
         assertEquals("Patrick",
-                staffDao.findById(deanThomas.getId()).get().getMember().getFirstName());
+                staffRepo.findById(deanThomas.getId()).get().getMember().getFirstName());
 
-        staffDao.delete(deanThomas);
-        allStaff = staffDao.findAll();
-        assertEquals(totalStaff -1, allStaff.size());
+        staffRepo.delete(deanThomas);
+        allStaff = staffRepo.findAll();
+        assertEquals(totalStaff - 1, allStaff.size());
         allStaff.stream().forEach(System.out::println);
     }
 }
